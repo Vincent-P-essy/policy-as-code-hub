@@ -1,0 +1,49 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "policy-as-code-hub"
+version = "1.0.0"
+description = "A curated, tested OPA/Rego policy library mapped to CIS Kubernetes, NIST 800-53 and PCI-DSS v4 — metadata read from the Rego annotations, so the catalogue cannot drift from the policies."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Vincent Plessy" }]
+keywords = ["opa", "rego", "policy-as-code", "kubernetes", "cis-benchmark", "nist-800-53", "pci-dss"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Security",
+]
+dependencies = ["PyYAML>=5.4", "rich>=13.0"]
+
+[project.optional-dependencies]
+dev = ["pytest>=7.0", "ruff>=0.6"]
+
+[project.scripts]
+pach = "pach.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/Vincent-P-essy/policy-as-code-hub"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/pach"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["E501"]
