@@ -1,0 +1,60 @@
+{
+  "jobs": [
+    {
+      "root": ".",
+      "label": "policy-as-code-hub",
+      "caption": "Real OPA validation of the repository's Rego policies and tests. Coverage describes policy mappings; it does not establish deployed enforcement.",
+      "setup": [
+        [
+          "python",
+          "-m",
+          "pip",
+          "install",
+          "-e",
+          ".[dev]"
+        ],
+        [
+          "python",
+          "-m",
+          "pip",
+          "install",
+          "pytest",
+          "pytest-asyncio",
+          "pytest-cov",
+          "responses",
+          "respx",
+          "socksio"
+        ],
+        [
+          "curl",
+          "-fsSL",
+          "-o",
+          "/usr/local/bin/opa",
+          "https://openpolicyagent.org/downloads/v1.18.2/opa_linux_amd64_static"
+        ],
+        [
+          "chmod",
+          "+x",
+          "/usr/local/bin/opa"
+        ]
+      ],
+      "commands": [
+        [
+          "opa",
+          "version"
+        ],
+        [
+          "pach",
+          "validate"
+        ],
+        [
+          "python",
+          "-m",
+          "pytest",
+          "-v",
+          "--tb=short"
+        ]
+      ]
+    }
+  ]
+}
